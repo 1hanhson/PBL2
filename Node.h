@@ -1,3 +1,5 @@
+#ifndef NODE_H
+#define NODE_H
 #include "Shoes.h"
 
 class Node{
@@ -23,3 +25,5 @@ class Node{
         friend class BST;
         friend class MaxHeap;
 };
+
+#endif 

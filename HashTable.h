@@ -1,3 +1,5 @@
+#ifndef HASH_TABLE_H
+#define HASH_TABLE_H
 #include "Node.h"
 
 class HashTable{
@@ -15,3 +17,5 @@ class HashTable{
 
         friend class ShoesManager;
 };
+
+#endif
