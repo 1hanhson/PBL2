@@ -1,4 +1,5 @@
 #include "Payment.h"
+#include <sstream>
 
 // Constructor mặc định
 Payment::Payment() {
@@ -28,7 +29,25 @@ void Payment::Output() {
          << " | Method: " << this->paymentMethod 
          << " | Status: " << this->status << endl;
 }
-
+ 
+//doi thanh 1 dong de luu file, cac truong cach nhau bang dau cach
+string Payment::ToLine() const {
+    return this->paymentId + " " + this->orderId + " " + to_string(this->amount) + " " +
+           this->paymentDate + " " + this->paymentMethod + " " + this->status;
+}
+ 
+//doc 1 dong tu file, thieu truong hoac sai so thi tra ve false
+bool Payment::FromLine(const string& line, Payment& p) {
+    stringstream ss(line);
+    string id, order, date, method, status;
+    long long amount;
+    ss >> id >> order >> amount >> date >> method >> status;
+    if (ss.fail())
+        return false;
+    p = Payment(id, order, amount, date, method, status);
+    return true;
+}
+ 
 string Payment::getPaymentId() const { return this->paymentId; }
 string Payment::getOrderId() const { return this->orderId; }
 long long Payment::getAmount() const { return this->amount; }

@@ -1,4 +1,5 @@
-
+#ifndef SHOES_MANAGER_H
+#define SHOES_MANAGER_H
 #include "BST.h"
 
 class ShoesManager{
@@ -7,6 +8,7 @@ class ShoesManager{
         int Nos;//number of shoes
         HashTable Hash;
         BST Tree;
+        MaxHeap Heap;
     public:
         ShoesManager();
         ~ShoesManager();
@@ -19,3 +21,5 @@ class ShoesManager{
         friend class HashTable;
         friend class BST;
 };
+
+#endif

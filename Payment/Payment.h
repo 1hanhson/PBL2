@@ -18,7 +18,9 @@ public:
             const string& paymentDate, const string& paymentMethod, const string& status);
 
     void Output();
-
+    string ToLine() const;
+    static bool FromLine(const string& line, Payment& p);
+    
     string getPaymentId() const;
     string getOrderId() const;
     long long getAmount() const;
