@@ -1,8 +1,4 @@
 #include "ShoesManager.h"
-#include <iostream>
-
-using namespace std;
-
 const int TRUE=1;
 const int FALSE=0;
 
@@ -34,8 +30,8 @@ int ShoesManager::Insert(const Shoes& s,Node* p){
 
     //insert vo hash
     this->Hash.Insert(NewNode);
+    //insert vo tree
     this->Tree.Insert(NewNode);
-    this->Heap.Insert(NewNode);
     return TRUE;
 }
 
@@ -45,6 +41,10 @@ void ShoesManager::Show(){
         tmp->data.Output();
         tmp=tmp->Next;
     }
+}
+
+void ShoesManager::ShowMinToMax(){
+    this->Tree.MinToMax(this->Tree.TreeRoot);
 }
 
 int ShoesManager::Delete(Node* p){
@@ -57,43 +57,12 @@ int ShoesManager::Delete(Node* p){
 
     //delete khoi hash
     this->Hash.Delete(p);
+
+    //delete khoi tree
+    this->Tree.Delete(p);
     return TRUE;
 }
 
 Node* ShoesManager::Search(const string& ID){
     return this->Hash.Search(ID);
-}
-
-void ShoesManager::ShowPriceLowToHigh() {
-    std::cout << "\n--- SAN PHAM THEO GIA (THAP DEN CAO) ---\n";
-    this->Tree.ShowLowToHigh(); 
-}
-
-void ShoesManager::ShowPriceHighToLow() {
-    std::cout << "\n--- SAN PHAM THEO GIA (CAO DEN THAP) ---\n";
-    this->Tree.ShowHighToLow(); 
-}
-
-void ShoesManager::ShowPriceRange(long long minPrice, long long maxPrice) {
-    this->Tree.ShowPriceRange(minPrice, maxPrice);
-}
-
-void ShoesManager::SellShoe(const string& ID, const int& amount) {
-    Node* target = this->Search(ID); 
-    if (target != NULL) {
-        int currentQuantity = target->data.GetQuantity();
-        if (currentQuantity >= amount) {
-            target->data.SetQuantity(currentQuantity - amount); 
-            this->Heap.IncreaseSold(target, amount);
-            cout << "Da ban " << amount << " doi giay " << ID << endl;
-        } else {
-            cout << "Khong du so luong ton kho!" << endl;
-        }
-    } else {
-        cout << "Khong tim thay giay!" << endl;
-    }
-}
-
-void ShoesManager::ShowTopSellers(const int& k) {
-    this->Heap.ShowTop(k);
 }

@@ -21,4 +21,5 @@ class Node{
         friend class ShoesManager;
         friend class HashTable;
         friend class BST;
+        friend class MaxHeap;
 };
