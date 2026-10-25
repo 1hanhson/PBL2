@@ -14,6 +14,9 @@ Node::Node(const Shoes& s){
     this->Next=NULL;
     this->Previous=NULL;
     this->NextHash=NULL;
+    this->Left=NULL;
+    this->Right=NULL;
+    this->Parent=NULL;
 }
 
 // Node::Node(const Node& n){
