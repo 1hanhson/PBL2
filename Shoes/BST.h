@@ -1,11 +1,14 @@
+#ifndef BST_H
+#define BST_H
 #include "HashTable.h"
 
 class BST {
     private:
         Node *TreeRoot;
+        void Transplant(Node*,Node*);
     public:
         BST();
-        ~BST();
+        ~BST();     // cay khong so huu node nen khong delete
         void MinToMax(Node*);
         void MaxToMin(Node*);
         Node* Maximum(Node*);
@@ -16,3 +19,5 @@ class BST {
         void Delete(Node*);
         friend class ShoesManager;
 };
+
+#endif

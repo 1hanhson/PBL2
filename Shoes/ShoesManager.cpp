@@ -2,7 +2,7 @@
 const int TRUE=1;
 const int FALSE=0;
 
-ShoesManager::ShoesManager() : Hash(101){
+ShoesManager::ShoesManager() : Hash(101), Heap(1000){
     this->pL=new Node;
     this->Nos=0;
 }
@@ -16,9 +16,9 @@ ShoesManager::~ShoesManager(){
 }
 
 int ShoesManager::Insert(const Shoes& s,Node* p){
-    Node* NewNode=new Node(s);
-    if(NewNode==NULL)
+    if(this->Heap.Size==this->Heap.Capacity)
         return FALSE;
+    Node* NewNode=new Node(s);
     if(p==NULL)
         p=this->pL;
     NewNode->Next=p->Next;
@@ -28,10 +28,10 @@ int ShoesManager::Insert(const Shoes& s,Node* p){
     p->Next=NewNode;
     this->Nos++;
 
-    //insert vo hash
+    //insert vo hash, tree, heap
     this->Hash.Insert(NewNode);
-    //insert vo tree
     this->Tree.Insert(NewNode);
+    this->Heap.Insert(NewNode);
     return TRUE;
 }
 
@@ -50,19 +50,38 @@ void ShoesManager::ShowMinToMax(){
 int ShoesManager::Delete(Node* p){
     if(p==NULL || p==this->pL)
         return FALSE;
+
+    //go khoi cac cau truc phu truoc (chung doc p->data)
+    this->Hash.Delete(p);
+    this->Tree.Delete(p);
+    this->Heap.Remove(p);
+
+    //go khoi danh sach lien ket doi
     p->Previous->Next=p->Next;
     if(p->Next!=NULL)
         p->Next->Previous=p->Previous;
     this->Nos--;
 
-    //delete khoi hash
-    this->Hash.Delete(p);
-
-    //delete khoi tree
-    this->Tree.Delete(p);
+    delete p;
     return TRUE;
 }
 
 Node* ShoesManager::Search(const string& ID){
     return this->Hash.Search(ID);
+}
+
+void ShoesManager::ShowMaxToMin(){
+    this->Tree.MaxToMin(this->Tree.TreeRoot);
+}
+
+void ShoesManager::ShowTop(const int& k){
+    this->Heap.ShowTop(k);
+}
+
+//tang so luong da ban theo ID, heap tu cap nhat
+bool ShoesManager::IncreaseSold(const string& ID,const int& amount){
+    Node* p=this->Search(ID);
+    if(p==NULL)
+        return false;
+    return this->Heap.IncreaseSold(p,amount);
 }

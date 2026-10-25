@@ -36,8 +36,9 @@ bool HashTable::Delete(Node *p){
     Node *tmp=this->Table[k];
     if(tmp==NULL)
         return false;
-    else if(tmp==p){
-        this->Table[k]=NULL;
+    if(tmp==p){
+        this->Table[k]=p->NextHash;   // sửa: nối bucket với node kế tiếp, không gán NULL
+        p->NextHash=NULL;
         return true;
     }
     while(tmp!=NULL && tmp->NextHash!=p){
@@ -46,6 +47,7 @@ bool HashTable::Delete(Node *p){
     if(tmp==NULL)
         return false;
     tmp->NextHash = p->NextHash;
+    p->NextHash=NULL;                 // thêm: ngắt node khỏi chuỗi
     return true;
 }
 

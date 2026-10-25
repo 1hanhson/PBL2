@@ -1,3 +1,5 @@
+#ifndef MAX_HEAP_H
+#define MAX_HEAP_H
 #include "Node.h"
 
 class MaxHeap {
@@ -10,7 +12,7 @@ class MaxHeap {
         int LeftChild(int i);
         int RightChild(int i);
         void Swap(Node*& a, Node*& b);
-        
+
         void HeapifyUp(int i);
         void HeapifyDown(int i);
 
@@ -19,8 +21,11 @@ class MaxHeap {
         ~MaxHeap();
 
         bool Insert(Node* p);
-        bool IncreaseSold(Node* p, const int& amount); 
+        bool Remove(Node* p);
+        bool IncreaseSold(Node* p, const int& amount);
         void ShowTop(const int& k);
-        
+
         friend class ShoesManager;
 };
+
+#endif

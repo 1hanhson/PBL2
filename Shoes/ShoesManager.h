@@ -1,6 +1,7 @@
 #ifndef SHOES_MANAGER_H
 #define SHOES_MANAGER_H
 #include "BST.h"
+#include "MaxHeap.h"
 
 class ShoesManager{
     private:
@@ -16,6 +17,8 @@ class ShoesManager{
         void Show();
         void ShowMinToMax();
         void ShowMaxToMin();
+        void ShowTop(const int&);
+        bool IncreaseSold(const string&,const int&);
         int Delete(Node*);
         Node* Search(const string&);
         friend class HashTable;

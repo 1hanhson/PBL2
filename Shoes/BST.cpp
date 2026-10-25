@@ -25,42 +25,26 @@ void BST::MaxToMin(Node* x){
 }
 
 Node* BST::Maximum(Node* x){
+    if(x==NULL)
+        return NULL;
     while(x->Right!=NULL)
         x=x->Right;
     return x;
 }
 
 Node* BST::Minimum(Node* x){
+    if(x==NULL)
+        return NULL;
     while(x->Left!=NULL)
         x=x->Left;
     return x;
 }
 
-void BST::Insert(Node* n){
-    Node* z=new Node;
-    z->data=n->data;
-    Node* x=this->TreeRoot;
-    Node* y=NULL;
-    while(x!=NULL){
-        y=x;
-        if(x->data.GetPrice()>n->data.GetPrice())
-            x=x->Left;
-        else
-            x=x->Right;
-    }
-    z->Parent=y;
-    if(y==NULL)
-        this->TreeRoot=z;
-    else if(z->data.GetPrice() < y->data.GetPrice())
-        y->Left=z;
-    else    
-        y->Right=z;
-}
-
 Node* BST::Successor(Node* x){
-    if(x->Right!=NULL){
+    if(x==NULL)
+        return NULL;
+    if(x->Right!=NULL)
         return this->Minimum(x->Right);
-    }
     Node *y=x->Parent;
     while(y!=NULL && x==y->Right){
         x=y;
@@ -78,27 +62,64 @@ Node* BST::Find(Node *tmp,const string& ID,const long long& Price){
         return this->Find(tmp->Right,ID,Price);
 }
 
-void BST::Delete(Node* n){
-    Node *z=this->Find(this->TreeRoot,n->data.GetID(),n->data.GetPrice());
-    Node *x,*y;
-    if(z->Left==NULL || z->Right==NULL)
-        y=z;
+void BST::Insert(Node* n){
+    if(n==NULL)
+        return;
+    //node nay co the mang gia tri cu, reset truoc khi gan vao cay
+    n->Left=NULL;
+    n->Right=NULL;
+    n->Parent=NULL;
+
+    Node* x=this->TreeRoot;
+    Node* y=NULL;
+    while(x!=NULL){
+        y=x;
+        if(n->data.GetPrice() < x->data.GetPrice())
+            x=x->Left;
+        else
+            x=x->Right;      //gia bang nhau di ve ben phai
+    }
+    n->Parent=y;
+    if(y==NULL)
+        this->TreeRoot=n;
+    else if(n->data.GetPrice() < y->data.GetPrice())
+        y->Left=n;
     else
-        y=this->Successor(z);
-    if(y->Left!=NULL)
-        x=y->Left;
-    else
-        x=y->Right;
-    if(x!=NULL)
-        x->Parent=y->Parent;
-    if(y->Parent==NULL)
-        this->TreeRoot=x;
-    else if(y->Parent->Left==y)
-        y->Parent->Left=x;
-    else
-        y->Parent->Right=x;
-    if(y!=z)
-        y->data=z->data;
-    delete y;
+        y->Right=n;
 }
 
+//thay cay con goc u bang cay con goc v (v co the NULL)
+void BST::Transplant(Node* u,Node* v){
+    if(u->Parent==NULL)
+        this->TreeRoot=v;
+    else if(u==u->Parent->Left)
+        u->Parent->Left=v;
+    else
+        u->Parent->Right=v;
+    if(v!=NULL)
+        v->Parent=u->Parent;
+}
+
+//go node z khoi cay, KHONG delete z (ShoesManager so huu node)
+void BST::Delete(Node* z){
+    if(z==NULL)
+        return;
+    if(z->Left==NULL)
+        this->Transplant(z,z->Right);
+    else if(z->Right==NULL)
+        this->Transplant(z,z->Left);
+    else{
+        Node* y=this->Minimum(z->Right);   //successor cua z
+        if(y->Parent!=z){
+            this->Transplant(y,y->Right);
+            y->Right=z->Right;
+            y->Right->Parent=y;
+        }
+        this->Transplant(z,y);
+        y->Left=z->Left;
+        y->Left->Parent=y;
+    }
+    z->Left=NULL;
+    z->Right=NULL;
+    z->Parent=NULL;
+}

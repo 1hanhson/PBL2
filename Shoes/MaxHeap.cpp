@@ -101,3 +101,22 @@ void MaxHeap::ShowTop(const int& k) {
         count++;
     }
 }
+
+//go node p khoi heap (khong delete p). Tra ve false neu p khong co trong heap
+bool MaxHeap::Remove(Node* p) {
+    if (p == NULL) return false;
+
+    for (int i = 0; i < this->Size; i++) {
+        if (this->Array[i] == p) {
+            this->Size--;
+            if (i != this->Size) {
+                //lay phan tu cuoi lap vao cho trong, roi sua lai the heap
+                this->Array[i] = this->Array[this->Size];
+                HeapifyUp(i);
+                HeapifyDown(i);
+            }
+            return true;
+        }
+    }
+    return false;
+}
