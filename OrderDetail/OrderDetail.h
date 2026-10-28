@@ -5,7 +5,8 @@
 #include <iostream>
 using namespace std;
 
-class OrderDetail{
+class OrderDetail
+{
     private:
         string OrderID;     // Ma don hang (khop voi Order::OrderID)
         string ShoesID;     // Ma giay (khop voi Shoes::ID)
