@@ -13,13 +13,16 @@ class ShoesManager{
     public:
         ShoesManager();
         ~ShoesManager();
-        int Insert(const Shoes&,Node*);
+        ShoesManager(const ShoesManager&) = delete;
+        ShoesManager& operator=(const ShoesManager&) = delete;
+
+        bool Insert(const Shoes&,Node*);
         void Show();
         void ShowMinToMax();
         void ShowMaxToMin();
         void ShowTop(const int&);
         bool IncreaseSold(const string&,const int&);
-        int Delete(Node*);
+        bool Delete(Node*);
         Node* Search(const string&);
         friend class HashTable;
         friend class BST;

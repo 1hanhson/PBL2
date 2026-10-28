@@ -1,3 +1,5 @@
+#ifndef CUSTOMER_H
+#define CUSTOMER_H
 #include <iostream>
 #include <string>
 using namespace std;
@@ -26,3 +28,5 @@ class Customer{
         void SetPhone(const string&);
         void SetAddress(const string&);
 };
+
+#endif

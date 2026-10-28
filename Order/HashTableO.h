@@ -1,3 +1,5 @@
+#ifndef HASH_TABLE_O_H
+#define HASH_TABLE_O_H
 #include "NodeO.h"
 #include <iostream>
 using namespace std;
@@ -12,6 +14,8 @@ class HashTableO{
     public:
         HashTableO(const int& = 101);
         ~HashTableO();
+        HashTableO(const HashTableO&) = delete;
+        HashTableO& operator=(const HashTableO&) = delete;
 
         bool Insert(NodeO*);
         NodeO* Search(const string&) const;
@@ -19,3 +23,5 @@ class HashTableO{
 
         friend class OrderManager;
 };
+
+#endif

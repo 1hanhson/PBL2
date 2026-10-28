@@ -10,6 +10,8 @@ class HashTable{
     public:
         HashTable(const int& = 101);
         ~HashTable();
+        HashTable(const HashTable&) = delete;
+        HashTable& operator=(const HashTable&) = delete;
 
         bool Insert(Node* p);
         bool Delete(Node* p);

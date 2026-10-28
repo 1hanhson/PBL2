@@ -1,3 +1,5 @@
+#ifndef NODE_O_H
+#define NODE_O_H
 #include "Order.h"
 
 class NodeO{
@@ -12,3 +14,5 @@ class NodeO{
         friend class HashTableO;
         friend class OrderManager;
 };
+
+#endif

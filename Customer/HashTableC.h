@@ -1,3 +1,5 @@
+#ifndef HASH_TABLE_C_H
+#define HASH_TABLE_C_H
 #include "NodeC.h"
 
 class HashTableC{
@@ -10,6 +12,8 @@ class HashTableC{
     public:
         HashTableC(const int& = 101);
         ~HashTableC();
+        HashTableC(const HashTableC&) = delete;
+        HashTableC& operator=(const HashTableC&) = delete;
 
         bool Insert(NodeC*);
         bool Delete(NodeC*);
@@ -17,3 +21,5 @@ class HashTableC{
 
         friend class CustomerManager;
 };
+
+#endif 

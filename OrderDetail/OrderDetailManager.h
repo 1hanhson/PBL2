@@ -9,6 +9,8 @@ class OrderDetailManager{
     public:
         OrderDetailManager();
         ~OrderDetailManager();
+        OrderDetailManager(const OrderDetailManager&) = delete;
+        OrderDetailManager& operator=(const OrderDetailManager&) = delete;
 
         bool Insert(const OrderDetail&, NodeOD* = NULL);
         void Show();

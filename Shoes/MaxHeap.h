@@ -8,9 +8,9 @@ class MaxHeap {
         int Capacity;
         int Size;
 
-        int Parent(int i);
-        int LeftChild(int i);
-        int RightChild(int i);
+        int Parent(int i) const;
+        int LeftChild(int i) const;
+        int RightChild(int i) const;
         void Swap(Node*& a, Node*& b);
 
         void HeapifyUp(int i);
@@ -19,11 +19,13 @@ class MaxHeap {
     public:
         MaxHeap(const int& capacity = 100);
         ~MaxHeap();
+        MaxHeap(const MaxHeap&) = delete;
+        MaxHeap& operator=(const MaxHeap&) = delete;
 
         bool Insert(Node* p);
         bool Remove(Node* p);
         bool IncreaseSold(Node* p, const int& amount);
-        void ShowTop(const int& k);
+        void ShowTop(const int& k) const;
 
         friend class ShoesManager;
 };

@@ -6,7 +6,7 @@ QueueO::QueueO(){
     this->Noo=0;
 }
 
-QueueO::~QueueO(){
+QueueO::~QueueO(){ // Queue không sở hữu node.
     this->Front = NULL;
     this->Rear = NULL;
     this->Noo = 0;

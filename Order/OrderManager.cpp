@@ -1,5 +1,18 @@
-
 #include "OrderManager.h"
+
+// HashTable chứa MỌI đơn (kể cả đã xử lý), Queue chỉ là tập con
+// => duyệt HashTable để delete, tránh delete 2 lần.
+OrderManager::~OrderManager(){
+    for(int i = 0; i < this->Hash.M; i++){
+        NodeO* p = this->Hash.Table[i];
+        while(p != NULL){
+            NodeO* nxt = p->NextHash;
+            delete p;
+            p = nxt;
+        }
+        this->Hash.Table[i] = NULL;
+    }
+}
 
 bool OrderManager::Insert(const Order& o){
     if(this->Hash.Search(o.GetOrderID()) != NULL)

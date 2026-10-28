@@ -1,7 +1,5 @@
 #include "PaymentManager.h"
 #include <fstream>
-const int TRUE=1;
-const int FALSE=0;
 
 //tao danh sach rong voi dung luong ban dau (it nhat 1)
 PaymentManager::PaymentManager(const int& capacity){
@@ -28,23 +26,23 @@ void PaymentManager::Grow(){
 
 //them giao dich vao cuoi danh sach (tu dong tang dung luong khi day)
 //tra ve FALSE neu Payment ID rong hoac da ton tai
-int PaymentManager::Add(const Payment& p){
+bool PaymentManager::Add(const Payment& p){
     if(p.getPaymentId()=="" || this->Search(p.getPaymentId())!=NULL)
-        return FALSE;
+        return false;
     if(this->Size==this->Capacity)
         this->Grow();
     this->List[this->Size]=p;
     this->Size++;
-    return TRUE;
+    return true;
 }
 
 //lay so luong giao dich
-int PaymentManager::GetCount(){
+int PaymentManager::GetCount() const{
     return this->Size;
 }
 
 //in tat ca giao dich theo thu tu them
-void PaymentManager::Show(){
+void PaymentManager::Show() const{
     if(this->Size==0){
         cout<<"Chua co giao dich nao."<<endl;
         return;
@@ -63,7 +61,7 @@ Payment* PaymentManager::Search(const string& paymentId){
 }
 
 //in cac giao dich co trang thai cho truoc, tra ve so giao dich tim duoc
-int PaymentManager::ShowByStatus(const string& status){
+int PaymentManager::ShowByStatus(const string& status) const{
     int count=0;
     for(int i=0;i<this->Size;i++){
         if(this->List[i].getStatus()==status){
@@ -75,7 +73,7 @@ int PaymentManager::ShowByStatus(const string& status){
 }
 
 //in cac giao dich co ngay bat dau bang chuoi date (vd 2026-10-23), tra ve so giao dich tim duoc
-int PaymentManager::ShowByDate(const string& date){
+int PaymentManager::ShowByDate(const string& date) const{
     int count=0;
     for(int i=0;i<this->Size;i++){
         if(this->List[i].getPaymentDate().find(date)==0){
@@ -87,7 +85,7 @@ int PaymentManager::ShowByDate(const string& date){
 }
 
 //in giao dich theo so tien giam dan (sap xep tren ban sao, danh sach goc khong doi)
-void PaymentManager::ShowMaxToMin(){
+void PaymentManager::ShowMaxToMin() const{
     if(this->Size==0){
         cout<<"Chua co giao dich nao."<<endl;
         return;
@@ -111,7 +109,7 @@ void PaymentManager::ShowMaxToMin(){
 }
 
 //dem so giao dich co trang thai cho truoc
-int PaymentManager::CountByStatus(const string& status){
+int PaymentManager::CountByStatus(const string& status) const{
     int count=0;
     for(int i=0;i<this->Size;i++){
         if(this->List[i].getStatus()==status)
@@ -121,7 +119,7 @@ int PaymentManager::CountByStatus(const string& status){
 }
 
 //tong doanh thu (chi tinh giao dich Success)
-long long PaymentManager::TotalRevenue(){
+long long PaymentManager::TotalRevenue() const{
     long long sum=0;
     for(int i=0;i<this->Size;i++){
         if(this->List[i].getStatus()=="Success")
@@ -131,7 +129,7 @@ long long PaymentManager::TotalRevenue(){
 }
 
 //doanh thu theo phuong thuc thanh toan (chi tinh Success)
-long long PaymentManager::RevenueByMethod(const string& method){
+long long PaymentManager::RevenueByMethod(const string& method) const{
     long long sum=0;
     for(int i=0;i<this->Size;i++){
         if(this->List[i].getStatus()=="Success" && this->List[i].getPaymentMethod()==method)
@@ -141,7 +139,7 @@ long long PaymentManager::RevenueByMethod(const string& method){
 }
 
 //doanh thu theo ngay, date la tien to cua ngay gio (vd 2026-10-23) (chi tinh Success)
-long long PaymentManager::RevenueByDate(const string& date){
+long long PaymentManager::RevenueByDate(const string& date) const{
     long long sum=0;
     for(int i=0;i<this->Size;i++){
         if(this->List[i].getStatus()=="Success" && this->List[i].getPaymentDate().find(date)==0)
@@ -151,13 +149,13 @@ long long PaymentManager::RevenueByDate(const string& date){
 }
 
 //luu moi giao dich thanh 1 dong, tra ve FALSE neu khong ghi duoc file
-int PaymentManager::SaveToFile(const string& path){
+bool PaymentManager::SaveToFile(const string& path) const{
     ofstream f(path.c_str());
     if(!f)
-        return FALSE;
+        return false;
     for(int i=0;i<this->Size;i++)
         f<<this->List[i].ToLine()<<'\n';
-    return TRUE;
+    return true;
 }
 
 //doc giao dich tu file, dong sai dinh dang hoac trung ID thi bo qua
@@ -170,7 +168,7 @@ int PaymentManager::LoadFromFile(const string& path){
     string line;
     while(getline(f,line)){
         Payment p;
-        if(Payment::FromLine(line,p) && this->Add(p)==TRUE)
+        if(Payment::FromLine(line,p) && this->Add(p))
             count++;
     }
     return count;

@@ -1,4 +1,5 @@
-
+#ifndef ORDER_H
+#define ORDER_H
 #include <string>
 using namespace std;
 
@@ -30,3 +31,5 @@ class Order{
         void SetStatus(const string&);
         void SetTotalAmount(const long long&);
 };
+
+#endif

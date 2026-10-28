@@ -1,3 +1,5 @@
+#ifndef QUEUE_O_H
+#define QUEUE_O_H
 #include "HashTableO.h"
 
 class QueueO{
@@ -14,3 +16,5 @@ class QueueO{
         bool IsEmpty();
         friend class OrderManager;
 };
+
+#endif

@@ -1,6 +1,4 @@
 #include "ShoesManager.h"
-const int TRUE=1;
-const int FALSE=0;
 
 ShoesManager::ShoesManager() : Hash(101), Heap(1000){
     this->pL=new Node;
@@ -15,9 +13,9 @@ ShoesManager::~ShoesManager(){
     }
 }
 
-int ShoesManager::Insert(const Shoes& s,Node* p){
+bool ShoesManager::Insert(const Shoes& s,Node* p){
     if(this->Heap.Size==this->Heap.Capacity)
-        return FALSE;
+        return false;
     Node* NewNode=new Node(s);
     if(p==NULL)
         p=this->pL;
@@ -32,7 +30,7 @@ int ShoesManager::Insert(const Shoes& s,Node* p){
     this->Hash.Insert(NewNode);
     this->Tree.Insert(NewNode);
     this->Heap.Insert(NewNode);
-    return TRUE;
+    return true;
 }
 
 void ShoesManager::Show(){
@@ -47,9 +45,9 @@ void ShoesManager::ShowMinToMax(){
     this->Tree.MinToMax(this->Tree.TreeRoot);
 }
 
-int ShoesManager::Delete(Node* p){
+bool ShoesManager::Delete(Node* p){
     if(p==NULL || p==this->pL)
-        return FALSE;
+        return false;
 
     //go khoi cac cau truc phu truoc (chung doc p->data)
     this->Hash.Delete(p);
@@ -63,7 +61,7 @@ int ShoesManager::Delete(Node* p){
     this->Nos--;
 
     delete p;
-    return TRUE;
+    return true;
 }
 
 Node* ShoesManager::Search(const string& ID){

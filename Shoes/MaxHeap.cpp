@@ -4,7 +4,7 @@
 using namespace std;
 
 MaxHeap::MaxHeap(const int& capacity) {
-    this->Capacity = capacity;
+    this->Capacity = capacity > 0 ? capacity : 1;
     this->Size = 0;
     this->Array = new Node*[this->Capacity];
 }
@@ -13,9 +13,9 @@ MaxHeap::~MaxHeap() {
     delete[] this->Array;
 }
 
-int MaxHeap::Parent(int i) { return (i - 1) / 2; }
-int MaxHeap::LeftChild(int i) { return (2 * i) + 1; }
-int MaxHeap::RightChild(int i) { return (2 * i) + 2; }
+int MaxHeap::Parent(int i) const { return (i - 1) / 2; }
+int MaxHeap::LeftChild(int i) const { return (2 * i) + 1; }
+int MaxHeap::RightChild(int i) const { return (2 * i) + 2; }
 
 void MaxHeap::Swap(Node*& a, Node*& b) {
     Node* temp = a;
@@ -62,20 +62,21 @@ bool MaxHeap::Insert(Node* p) {
 }
 
 bool MaxHeap::IncreaseSold(Node* p, const int& amount) {
-    if (p == NULL) return false;
+    if (p == NULL || amount <= 0) return false;
 
     for (int i = 0; i < this->Size; i++) {
         if (this->Array[i] == p) {
             int currentSold = p->data.GetSold();
             p->data.SetSold(currentSold + amount);
             HeapifyUp(i); 
+            HeapifyDown(i);
             return true;
         }
     }
     return false;
 }
 
-void MaxHeap::ShowTop(const int& k) {
+void MaxHeap::ShowTop(const int& k) const {
     if (this->Size == 0) {
         cout << "Danh sach trong!" << endl;
         return;

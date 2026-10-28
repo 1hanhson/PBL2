@@ -1,4 +1,5 @@
-
+#ifndef CUSTOMER_MANAGER_H
+#define CUSTOMER_MANAGER_H
 #include "HashTableC.h"
 
 class CustomerManager{
@@ -10,6 +11,8 @@ class CustomerManager{
     public:
         CustomerManager();
         ~CustomerManager();
+        CustomerManager(const CustomerManager&) = delete;
+        CustomerManager& operator=(const CustomerManager&) = delete;
 
         bool Insert(const Customer&, NodeC* = NULL);
         void Show();
@@ -20,3 +23,5 @@ class CustomerManager{
 
         friend class HashTableC;
 };
+
+#endif

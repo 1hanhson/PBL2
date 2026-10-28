@@ -12,7 +12,7 @@ Shoes::Shoes(){
     this->Sold = 0;
 }
 
-Shoes::Shoes(const string& ID,const string& Name,const string& Brand,const int& Size,const double& Price,const int& Quantity){
+Shoes::Shoes(const string& ID,const string& Name,const string& Brand,const int& Size,const long long& Price,const int& Quantity){
     this->ID=ID;
     this->Name=Name;
     this->Brand=Brand;
@@ -42,7 +42,7 @@ void Shoes::Input() {
     cin >> Quantity;
 }
 
-void Shoes::Output() {
+void Shoes::Output() const {
     cout << "ID: " << ID << endl;
     cout << "Name: " << Name << endl;
     cout << "Brand: " << Brand << endl;
@@ -53,31 +53,31 @@ void Shoes::Output() {
     cout << endl;
 }
 
-string Shoes::GetID() {
+string Shoes::GetID() const {
     return ID;
 }
 
-string Shoes::GetName() {
+string Shoes::GetName() const {
     return Name;
 }
 
-string Shoes::GetBrand() {
+string Shoes::GetBrand() const {
     return Brand;
 }
 
-int Shoes::GetSize() {
+int Shoes::GetSize() const {
     return Size;
 }
 
-long long Shoes::GetPrice() {
+long long Shoes::GetPrice() const {
     return Price;
 }
 
-int Shoes::GetQuantity() {
+int Shoes::GetQuantity() const {
     return Quantity;
 }
 
-int Shoes::GetSold() {
+int Shoes::GetSold() const {
     return this->Sold;
 }
 
@@ -97,7 +97,7 @@ void Shoes::SetSize(const int& Size) {
     this->Size = Size;
 }
 
-void Shoes::SetPrice(const double& Price) {
+void Shoes::SetPrice(const long long& Price) {
     this->Price = Price;
 }
 

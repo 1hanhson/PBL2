@@ -1,4 +1,5 @@
-
+#ifndef NODE_C_H
+#define NODE_C_H
 #include "Customer.h"
 
 class NodeC{
@@ -17,3 +18,5 @@ class NodeC{
         friend class CustomerManager;
         friend class HashTableC;
 };
+
+#endif

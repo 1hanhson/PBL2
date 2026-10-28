@@ -16,25 +16,25 @@ class Shoes{
         int Sold;
     public:
         Shoes();
-        Shoes(const string&,const string&,const string&,const int&,const double&,const int&);
+        Shoes(const string&,const string&,const string&,const int&,const long long&,const int&);
         void Input();
-        void Output();
+        void Output() const;
 
-        string GetID();
-        string GetName();
-        string GetBrand();
-        int GetSize();
-        long long GetPrice();
-        int GetQuantity();
+        string GetID() const;
+        string GetName() const;
+        string GetBrand() const;
+        int GetSize() const;
+        long long GetPrice() const;
+        int GetQuantity() const;
 
         void SetID(const string&);
         void SetName(const string&);
         void SetBrand(const string&);
         void SetSize(const int&);
-        void SetPrice(const double&);
+        void SetPrice(const long long&);
         void SetQuantity(const int&);
 
-        int GetSold();
+        int GetSold() const;
         void SetSold(const int&);
 };
 

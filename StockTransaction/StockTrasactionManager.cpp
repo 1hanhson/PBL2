@@ -1,7 +1,5 @@
 #include "StockTransactionManager.h"
 #include <fstream>
-const int TRUE=1;
-const int FALSE=0;
 
 //tao danh sach rong voi dung luong ban dau (it nhat 1)
 StockTransactionManager::StockTransactionManager(const int& capacity){
@@ -28,27 +26,27 @@ void StockTransactionManager::Grow(){
 
 //them giao dich vao cuoi danh sach (tu dong tang dung luong khi day)
 //tra ve FALSE neu ID rong/da ton tai, loai khong phai Import/Export, hoac so luong <= 0
-int StockTransactionManager::Add(const StockTransaction& t){
+bool StockTransactionManager::Add(const StockTransaction& t){
     if(t.GetTransactionId()=="" || this->Search(t.GetTransactionId())!=NULL)
-        return FALSE;
+        return false;
     if(t.GetType()!="Import" && t.GetType()!="Export")
-        return FALSE;
+        return false;
     if(t.GetQuantity()<=0)
-        return FALSE;
+        return false;
     if(this->Size==this->Capacity)
         this->Grow();
     this->List[this->Size]=t;
     this->Size++;
-    return TRUE;
+    return true;
 }
 
 //lay so luong giao dich
-int StockTransactionManager::GetCount(){
+int StockTransactionManager::GetCount() const{
     return this->Size;
 }
 
 //in tat ca giao dich theo thu tu them
-void StockTransactionManager::Show(){
+void StockTransactionManager::Show() const{
     if(this->Size==0){
         cout<<"Chua co giao dich kho nao."<<endl;
         return;
@@ -67,7 +65,7 @@ StockTransaction* StockTransactionManager::Search(const string& transactionId){
 }
 
 //in cac giao dich co loai cho truoc (Import/Export), tra ve so giao dich tim duoc
-int StockTransactionManager::ShowByType(const string& type){
+int StockTransactionManager::ShowByType(const string& type) const{
     int count=0;
     for(int i=0;i<this->Size;i++){
         if(this->List[i].GetType()==type){
@@ -79,7 +77,7 @@ int StockTransactionManager::ShowByType(const string& type){
 }
 
 //in cac giao dich cua 1 doi giay, tra ve so giao dich tim duoc
-int StockTransactionManager::ShowByShoe(const string& shoeId){
+int StockTransactionManager::ShowByShoe(const string& shoeId) const{
     int count=0;
     for(int i=0;i<this->Size;i++){
         if(this->List[i].GetShoeId()==shoeId){
@@ -91,7 +89,7 @@ int StockTransactionManager::ShowByShoe(const string& shoeId){
 }
 
 //in cac giao dich co ngay bat dau bang chuoi date (vd 2026-10-23), tra ve so giao dich tim duoc
-int StockTransactionManager::ShowByDate(const string& date){
+int StockTransactionManager::ShowByDate(const string& date) const{
     int count=0;
     for(int i=0;i<this->Size;i++){
         if(this->List[i].GetTransactionDate().find(date)==0){
@@ -103,7 +101,7 @@ int StockTransactionManager::ShowByDate(const string& date){
 }
 
 //in giao dich theo gia tri giam dan (sap xep tren ban sao, danh sach goc khong doi)
-void StockTransactionManager::ShowMaxToMin(){
+void StockTransactionManager::ShowMaxToMin() const{
     if(this->Size==0){
         cout<<"Chua co giao dich kho nao."<<endl;
         return;
@@ -127,7 +125,7 @@ void StockTransactionManager::ShowMaxToMin(){
 }
 
 //dem so giao dich co loai cho truoc
-int StockTransactionManager::CountByType(const string& type){
+int StockTransactionManager::CountByType(const string& type) const{
     int count=0;
     for(int i=0;i<this->Size;i++){
         if(this->List[i].GetType()==type)
@@ -137,7 +135,7 @@ int StockTransactionManager::CountByType(const string& type){
 }
 
 //tong so luong giay theo loai giao dich (Import/Export)
-int StockTransactionManager::TotalQuantityByType(const string& type){
+int StockTransactionManager::TotalQuantityByType(const string& type) const{
     int sum=0;
     for(int i=0;i<this->Size;i++){
         if(this->List[i].GetType()==type)
@@ -147,7 +145,7 @@ int StockTransactionManager::TotalQuantityByType(const string& type){
 }
 
 //ton kho rong cua 1 doi giay = tong nhap - tong xuat
-int StockTransactionManager::NetQuantityByShoe(const string& shoeId){
+int StockTransactionManager::NetQuantityByShoe(const string& shoeId) const{
     int sum=0;
     for(int i=0;i<this->Size;i++){
         if(this->List[i].GetShoeId()==shoeId){
@@ -161,7 +159,7 @@ int StockTransactionManager::NetQuantityByShoe(const string& shoeId){
 }
 
 //tong gia tri giao dich theo loai (Import = tien nhap hang, Export = tien xuat hang)
-long long StockTransactionManager::TotalValueByType(const string& type){
+long long StockTransactionManager::TotalValueByType(const string& type) const{
     long long sum=0;
     for(int i=0;i<this->Size;i++){
         if(this->List[i].GetType()==type)
@@ -171,13 +169,13 @@ long long StockTransactionManager::TotalValueByType(const string& type){
 }
 
 //luu moi giao dich thanh 1 dong, tra ve FALSE neu khong ghi duoc file
-int StockTransactionManager::SaveToFile(const string& path){
+bool StockTransactionManager::SaveToFile(const string& path) const{
     ofstream f(path.c_str());
     if(!f)
-        return FALSE;
+        return false;
     for(int i=0;i<this->Size;i++)
         f<<this->List[i].ToLine()<<'\n';
-    return TRUE;
+    return true;
 }
 
 //doc giao dich tu file, dong sai dinh dang hoac trung ID thi bo qua
@@ -190,7 +188,7 @@ int StockTransactionManager::LoadFromFile(const string& path){
     string line;
     while(getline(f,line)){
         StockTransaction t;
-        if(StockTransaction::FromLine(line,t) && this->Add(t)==TRUE)
+        if(StockTransaction::FromLine(line,t) && this->Add(t))
             count++;
     }
     return count;

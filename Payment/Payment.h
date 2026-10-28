@@ -1,3 +1,5 @@
+#ifndef PAYMENT_H
+#define PAYMENT_H
 #include <string>
 #include <iostream>
 
@@ -35,3 +37,5 @@ public:
     void setPaymentMethod(const string& paymentMethod);
     void setStatus(const string& status);
 };
+
+#endif

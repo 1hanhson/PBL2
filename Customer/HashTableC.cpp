@@ -1,4 +1,3 @@
-
 #include "HashTableC.h"
 
 HashTableC::HashTableC(const int& M){

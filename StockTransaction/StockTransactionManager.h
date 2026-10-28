@@ -11,19 +11,22 @@ class StockTransactionManager{
     public:
         StockTransactionManager(const int& = 100);
         ~StockTransactionManager();
-        int Add(const StockTransaction&);
-        int GetCount();
-        void Show();
+        StockTransactionManager(const StockTransactionManager&) = delete;
+        StockTransactionManager& operator=(const StockTransactionManager&) = delete;
+
+        bool Add(const StockTransaction&);
+        int GetCount() const;
+        void Show() const;
         StockTransaction* Search(const string&);
-        int ShowByType(const string&);
-        int ShowByShoe(const string&);
-        int ShowByDate(const string&);
-        void ShowMaxToMin();
-        int CountByType(const string&);
-        int TotalQuantityByType(const string&);
-        int NetQuantityByShoe(const string&);
-        long long TotalValueByType(const string&);
-        int SaveToFile(const string&);
+        int ShowByType(const string&) const;
+        int ShowByShoe(const string&) const;
+        int ShowByDate(const string&) const;
+        void ShowMaxToMin() const;
+        int CountByType(const string&) const;
+        int TotalQuantityByType(const string&) const;
+        int NetQuantityByShoe(const string&) const;
+        long long TotalValueByType(const string&) const;
+        bool SaveToFile(const string&) const;
         int LoadFromFile(const string&);
 };
 
