@@ -2,6 +2,11 @@
 #define ORDER_H
 #include <string>
 using namespace std;
+namespace OrderStatus {
+    const string Pending   = "Cho xu ly";
+    const string Processed = "Da xu ly";
+    const string Cancelled = "Da huy";
+}
 
 class Order{
     private:

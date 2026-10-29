@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Shoes.h"
+#include "limits"
 #include <sstream>
 using namespace std;
 
@@ -25,13 +26,13 @@ Shoes::Shoes(const string& ID,const string& Name,const string& Brand,const int& 
 
 void Shoes::Input() {
     cout << "ID: ";
-    cin >> ID;
+    getline(cin >> ws, ID);
 
     cout << "Name: ";
-    cin >> Name;
+    getline(cin, Name);
 
     cout << "Brand: ";
-    cin >> Brand;
+    getline(cin, Brand);
 
     cout << "Size: ";
     cin >> Size;
@@ -41,6 +42,7 @@ void Shoes::Input() {
 
     cout << "Quantity: ";
     cin >> Quantity;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
 void Shoes::Output() const {

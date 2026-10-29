@@ -16,7 +16,7 @@ class ShoesManager{
         ShoesManager(const ShoesManager&) = delete;
         ShoesManager& operator=(const ShoesManager&) = delete;
 
-        bool Insert(const Shoes&,Node*);
+        bool Insert(const Shoes&,Node* = NULL);
         void Show();
         void ShowMinToMax();
         void ShowMaxToMin();

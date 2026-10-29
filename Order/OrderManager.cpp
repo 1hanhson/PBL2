@@ -1,5 +1,4 @@
 #include "OrderManager.h"
-namespace { const string ORDER_PROCESSED = "Da xu ly"; }
 OrderManager::OrderManager(){}
 
 // HashTable chứa MỌI đơn (kể cả đã xử lý), Queue chỉ là tập con
@@ -88,13 +87,13 @@ bool OrderManager::Delete(NodeO* p){
     return true;
 }
 
-bool OrderManager::ProcessNext(Order& o){
+bool OrderManager::ProcessNext(Order& o) {
     NodeO* p = this->Q.Dequeue();
 
-    if(p == NULL)
+    if (p == NULL)
         return false;
 
-    p->data.SetStatus("Da xu ly");
+    p->data.SetStatus(OrderStatus::Processed);
     o = p->data;
 
     // Khong xoa khoi HashTable

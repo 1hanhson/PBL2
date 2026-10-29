@@ -4,6 +4,11 @@
 #include <iostream>
 
 using namespace std;
+namespace PaymentStatus {
+    const string Wait    = "Wait";
+    const string Success = "Success";
+    const string Failed  = "Failed";
+}
 
 class Payment {
 private:
@@ -19,7 +24,7 @@ public:
     Payment(const string& paymentId, const string& orderId, long long amount, 
             const string& paymentDate, const string& paymentMethod, const string& status);
 
-    void Output();
+    void Output() const;
     string ToLine() const;
     static bool FromLine(const string& line, Payment& p);
     

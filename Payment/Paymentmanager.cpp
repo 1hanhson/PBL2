@@ -122,7 +122,7 @@ int PaymentManager::CountByStatus(const string& status) const{
 long long PaymentManager::TotalRevenue() const{
     long long sum=0;
     for(int i=0;i<this->Size;i++){
-        if(this->List[i].getStatus()=="Success")
+        if(this->List[i].getStatus()==PaymentStatus::Success)
             sum+=this->List[i].getAmount();
     }
     return sum;
@@ -132,7 +132,7 @@ long long PaymentManager::TotalRevenue() const{
 long long PaymentManager::RevenueByMethod(const string& method) const{
     long long sum=0;
     for(int i=0;i<this->Size;i++){
-        if(this->List[i].getStatus()=="Success" && this->List[i].getPaymentMethod()==method)
+        if(this->List[i].getStatus()==PaymentStatus::Success && this->List[i].getPaymentMethod()==method)
             sum+=this->List[i].getAmount();
     }
     return sum;
@@ -142,7 +142,7 @@ long long PaymentManager::RevenueByMethod(const string& method) const{
 long long PaymentManager::RevenueByDate(const string& date) const{
     long long sum=0;
     for(int i=0;i<this->Size;i++){
-        if(this->List[i].getStatus()=="Success" && this->List[i].getPaymentDate().find(date)==0)
+        if(this->List[i].getStatus()==PaymentStatus::Success && this->List[i].getPaymentDate().find(date)==0)
             sum+=this->List[i].getAmount();
     }
     return sum;

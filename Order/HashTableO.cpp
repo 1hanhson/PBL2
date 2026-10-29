@@ -17,7 +17,7 @@ HashTableO::~HashTableO() {
 int HashTableO::HashFunction(const string& ID) const {
     unsigned long long sum = 0;
 
-    for (int i = 0; i < ID.length(); i++) {
+    for (size_t i = 0; i < ID.length(); i++) {
         sum += ID[i];
     }
 

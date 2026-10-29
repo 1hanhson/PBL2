@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <limits>
 #include "Order.h"
 using namespace std;
 
@@ -8,7 +9,7 @@ Order::Order(){
     this->OrderID = "";
     this->CustomerID = "";
     this->OrderDate = "";
-    this->Status = "";
+    this->Status = OrderStatus::Pending;
     this->TotalAmount = 0;
 }
 

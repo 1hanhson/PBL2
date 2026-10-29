@@ -13,23 +13,46 @@ ShoesManager::~ShoesManager(){
     }
 }
 
-bool ShoesManager::Insert(const Shoes& s,Node* p){
-    if(this->Heap.Size==this->Heap.Capacity)
+bool ShoesManager::Insert(const Shoes& s, Node* p) {
+    // Kiem tra ma giay rong hoac da ton tai trong HashTable
+    if (s.GetID().empty() || this->Hash.Search(s.GetID()) != NULL)
         return false;
-    Node* NewNode=new Node(s);
-    if(p==NULL)
-        p=this->pL;
-    NewNode->Next=p->Next;
-    NewNode->Previous=p;
-    if(NewNode->Next!=NULL)
-        NewNode->Next->Previous=NewNode;
-    p->Next=NewNode;
+
+    // Kiem tra MaxHeap da day chua
+    if (this->Heap.Size == this->Heap.Capacity)
+        return false;
+
+    // Tao nut moi chua thong tin giay
+    Node* NewNode = new Node(s);
+
+    // Neu khong truyen p thi chen sau nut dau danh sach pL
+    if (p == NULL)
+        p = this->pL;
+
+    // Chen nut moi vao danh sach lien ket kep
+    NewNode->Next = p->Next;
+    NewNode->Previous = p;
+
+    // Cap nhat lien ket Previous cua nut phia sau
+    if (NewNode->Next != NULL)
+        NewNode->Next->Previous = NewNode;
+
+    // Cap nhat lien ket Next cua nut p
+    p->Next = NewNode;
+
+    // Tang so luong nut trong danh sach
     this->Nos++;
 
-    //insert vo hash, tree, heap
+    // Them nut moi vao HashTable de tim kiem theo ma giay
     this->Hash.Insert(NewNode);
+
+    // Them nut moi vao BST de sap xep va tim kiem
     this->Tree.Insert(NewNode);
+
+    // Them nut moi vao MaxHeap de quan ly theo thuoc tinh uu tien
     this->Heap.Insert(NewNode);
+
+    // Them giay thanh cong
     return true;
 }
 

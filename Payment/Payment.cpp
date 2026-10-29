@@ -18,10 +18,10 @@ Payment::Payment(const string& paymentId, const string& orderId, long long amoun
     this->amount = amount;
     this->paymentDate = paymentDate;
     this->paymentMethod = paymentMethod;
-    this->status = status;
+    this->status = PaymentStatus::Wait;
 }
 
-void Payment::Output() {
+void Payment::Output() const {
     cout << "Payment ID: " << this->paymentId 
          << " | Order ID: " << this->orderId 
          << " | Amount: " << this->amount 
