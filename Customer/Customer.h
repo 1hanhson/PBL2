@@ -27,6 +27,9 @@ class Customer{
         void SetName(const string&);
         void SetPhone(const string&);
         void SetAddress(const string&);
+
+        string ToLine() const;
+        static bool FromLine(const string&, Customer&);
 };
 
 #endif

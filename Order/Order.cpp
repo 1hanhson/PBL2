@@ -1,6 +1,6 @@
 
 #include <iostream>
-#include <limits>
+#include <sstream>
 #include "Order.h"
 using namespace std;
 
@@ -86,4 +86,27 @@ void Order::SetStatus(const string& Status){
 
 void Order::SetTotalAmount(const long long& TotalAmount){
     this->TotalAmount = TotalAmount;
+}
+
+// OrderID,CustomerID,OrderDate,Status,TotalAmount
+string Order::ToLine() const{
+    return this->OrderID + "," + this->CustomerID + "," + this->OrderDate + "," +
+           this->Status + "," + to_string(this->TotalAmount);
+}
+
+bool Order::FromLine(const string& line, Order& o){
+    stringstream ss(line);
+    string id, customer, date, status, rest;
+    long long total;
+
+    if(!getline(ss, id, ',') || !getline(ss, customer, ',') ||
+       !getline(ss, date, ',') || !getline(ss, status, ','))
+        return false;
+    if(!(ss >> total) || (ss >> rest))
+        return false;
+    if(id.empty() || total < 0)
+        return false;
+
+    o = Order(id, customer, date, status, total);
+    return true;
 }

@@ -1,4 +1,6 @@
 #include "OrderManager.h"
+namespace { const string ORDER_PROCESSED = "Da xu ly"; }
+OrderManager::OrderManager(){}
 
 // HashTable chứa MỌI đơn (kể cả đã xử lý), Queue chỉ là tập con
 // => duyệt HashTable để delete, tránh delete 2 lần.

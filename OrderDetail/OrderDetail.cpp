@@ -47,19 +47,28 @@ long long OrderDetail::GetSubTotal() const{
     return (long long)this->Quantity * this->UnitPrice;
 }
 
+// OrderID,ShoesID,Quantity,UnitPrice
 string OrderDetail::ToLine() const{
-    return this->OrderID + " " + this->ShoesID + " " +
-           to_string(this->Quantity) + " " + to_string(this->UnitPrice);
+    return this->OrderID + "," + this->ShoesID + "," +
+           to_string(this->Quantity) + "," + to_string(this->UnitPrice);
 }
 
 bool OrderDetail::FromLine(const string& line, OrderDetail& d){
     stringstream ss(line);
-    string order, shoes;
+    string order, shoes, rest;
     int quantity;
     long long price;
-    ss >> order >> shoes >> quantity >> price;
-    if(ss.fail())
+    char c;
+
+    if(!getline(ss, order, ',') || !getline(ss, shoes, ','))
         return false;
+    if(!(ss >> quantity >> c >> price) || c != ',')
+        return false;
+    if(ss >> rest)
+        return false;
+    if(order.empty() || shoes.empty())
+        return false;
+
     d = OrderDetail(order, shoes, quantity, price);
     return true;
 }

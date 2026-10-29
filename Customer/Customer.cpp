@@ -1,6 +1,5 @@
-
-#include <limits>
 #include "Customer.h"
+#include <sstream>
 using namespace std;
 
 Customer::Customer(){
@@ -70,4 +69,26 @@ void Customer::SetPhone(const string& Phone){
 
 void Customer::SetAddress(const string& Address){
     this->Address = Address;
+}
+
+// ID,Name,Phone,Address
+string Customer::ToLine() const{
+    return this->ID + "," + this->Name + "," + this->Phone + "," + this->Address;
+}
+
+bool Customer::FromLine(const string& line, Customer& c){
+    stringstream ss(line);
+    string id, name, phone, address;
+
+    if(!getline(ss, id, ',') || !getline(ss, name, ',') ||
+       !getline(ss, phone, ',') || !getline(ss, address))
+        return false;
+
+    if(!address.empty() && address[address.size() - 1] == '\r')   // file Windows
+        address.erase(address.size() - 1);
+    if(id.empty() || address.find(',') != string::npos)           // thua truong
+        return false;
+
+    c = Customer(id, name, phone, address);
+    return true;
 }

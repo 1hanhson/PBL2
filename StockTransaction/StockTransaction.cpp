@@ -32,22 +32,32 @@ void StockTransaction::Output() const {
          << " | Date: " << this->transactionDate << endl;
 }
 
-//doi thanh 1 dong de luu file, cac truong cach nhau bang dau cach
+// TransactionID,ShoeID,Type,Quantity,UnitPrice,Date
 string StockTransaction::ToLine() const {
-    return this->transactionId + " " + this->shoeId + " " + this->type + " " +
-           to_string(this->quantity) + " " + to_string(this->unitPrice) + " " +
+    return this->transactionId + "," + this->shoeId + "," + this->type + "," +
+           to_string(this->quantity) + "," + to_string(this->unitPrice) + "," +
            this->transactionDate;
 }
 
-//doc 1 dong tu file, thieu truong hoac sai so thi tra ve false
 bool StockTransaction::FromLine(const string& line, StockTransaction& t) {
     stringstream ss(line);
     string id, shoe, type, date;
     int quantity;
     long long price;
-    ss >> id >> shoe >> type >> quantity >> price >> date;
-    if (ss.fail())
+    char c1, c2;
+
+    if (!getline(ss, id, ',') || !getline(ss, shoe, ',') || !getline(ss, type, ','))
         return false;
+    if (!(ss >> quantity >> c1 >> price >> c2) || c1 != ',' || c2 != ',')
+        return false;
+    if (!getline(ss, date))
+        return false;
+
+    if (!date.empty() && date[date.size() - 1] == '\r')
+        date.erase(date.size() - 1);
+    if (id.empty() || date.find(',') != string::npos)
+        return false;
+
     t = StockTransaction(id, shoe, type, quantity, price, date);
     return true;
 }

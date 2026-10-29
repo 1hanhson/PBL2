@@ -36,6 +36,9 @@ class Shoes{
 
         int GetSold() const;
         void SetSold(const int&);
+
+        string ToLine() const;
+        static bool FromLine(const string&, Shoes&);
 };
 
 #endif

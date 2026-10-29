@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Shoes.h"
+#include <sstream>
 using namespace std;
 
 Shoes::Shoes(){
@@ -107,4 +108,35 @@ void Shoes::SetQuantity(const int& Quantity) {
 
 void Shoes::SetSold(const int& Sold) {
     this->Sold = Sold;
+}
+
+// ID,Name,Brand,Size,Price,Quantity,Sold
+string Shoes::ToLine() const{
+    return this->ID + "," + this->Name + "," + this->Brand + "," +
+           to_string(this->Size) + "," + to_string(this->Price) + "," +
+           to_string(this->Quantity) + "," + to_string(this->Sold);
+}
+
+// Thieu truong, so khong hop le, so am hoac thua du lieu thi tra ve false
+bool Shoes::FromLine(const string& line, Shoes& s){
+    stringstream ss(line);
+    string id, name, brand, rest;
+    int size, quantity, sold;
+    long long price;
+    char c1, c2, c3;
+
+    if(!getline(ss, id, ',') || !getline(ss, name, ',') || !getline(ss, brand, ','))
+        return false;
+    if(!(ss >> size >> c1 >> price >> c2 >> quantity >> c3 >> sold))
+        return false;
+    if(c1 != ',' || c2 != ',' || c3 != ',')
+        return false;
+    if(ss >> rest)                      // con ky tu thua sau truong cuoi
+        return false;
+    if(id.empty() || size < 0 || price < 0 || quantity < 0 || sold < 0)
+        return false;
+
+    s = Shoes(id, name, brand, size, price, quantity);
+    s.SetSold(sold);                    // constructor luon dat Sold = 0
+    return true;
 }

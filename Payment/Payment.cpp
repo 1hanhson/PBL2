@@ -30,20 +30,30 @@ void Payment::Output() {
          << " | Status: " << this->status << endl;
 }
  
-//doi thanh 1 dong de luu file, cac truong cach nhau bang dau cach
+// PaymentID,OrderID,Amount,Date,Method,Status
 string Payment::ToLine() const {
-    return this->paymentId + " " + this->orderId + " " + to_string(this->amount) + " " +
-           this->paymentDate + " " + this->paymentMethod + " " + this->status;
+    return this->paymentId + "," + this->orderId + "," + to_string(this->amount) + "," +
+           this->paymentDate + "," + this->paymentMethod + "," + this->status;
 }
- 
-//doc 1 dong tu file, thieu truong hoac sai so thi tra ve false
+
 bool Payment::FromLine(const string& line, Payment& p) {
     stringstream ss(line);
     string id, order, date, method, status;
     long long amount;
-    ss >> id >> order >> amount >> date >> method >> status;
-    if (ss.fail())
+    char c;
+
+    if (!getline(ss, id, ',') || !getline(ss, order, ','))
         return false;
+    if (!(ss >> amount >> c) || c != ',')
+        return false;
+    if (!getline(ss, date, ',') || !getline(ss, method, ',') || !getline(ss, status))
+        return false;
+
+    if (!status.empty() && status[status.size() - 1] == '\r')
+        status.erase(status.size() - 1);
+    if (id.empty() || status.find(',') != string::npos)
+        return false;
+
     p = Payment(id, order, amount, date, method, status);
     return true;
 }

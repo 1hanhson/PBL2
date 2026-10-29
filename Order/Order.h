@@ -30,6 +30,9 @@ class Order{
         void SetOrderDate(const string&);
         void SetStatus(const string&);
         void SetTotalAmount(const long long&);
+        
+        string ToLine() const;
+        static bool FromLine(const string&, Order&);
 };
 
 #endif
