@@ -171,7 +171,7 @@ long long StockTransactionManager::TotalValueByType(const string& type) const{
 //luu moi giao dich thanh 1 dong, tra ve FALSE neu khong ghi duoc file
 bool StockTransactionManager::SaveToFile(const string& path) const{
     ofstream f(path.c_str());
-    if(!f)
+    if(!f.is_open())
         return false;
     for(int i=0;i<this->Size;i++)
         f<<this->List[i].ToLine()<<'\n';
@@ -182,7 +182,7 @@ bool StockTransactionManager::SaveToFile(const string& path) const{
 //tra ve -1 neu khong mo duoc file, nguoc lai tra ve so giao dich doc duoc
 int StockTransactionManager::LoadFromFile(const string& path){
     ifstream f(path.c_str());
-    if(!f)
+    if(!f.is_open())
         return -1;
     int count=0;
     string line;

@@ -283,6 +283,14 @@ static void TestShoesManager() {
     Check("BST: xoa X1 khi cung gia", m3.Delete(m3.Search("X1")));
     string t3 = Capture([&]() { m3.ShowMinToMax(); });
     Check("BST: X2 van con sau khi xoa X1", Has(t3, "ID: X2") && !Has(t3, "ID: X1"));
+
+    // Luu / doc file
+    const string pathShoes = "test_tmp_shoes.csv";
+    Check("ShoesManager::SaveToFile", m.SaveToFile(pathShoes));
+    ShoesManager mFile;
+    Check("ShoesManager::LoadFromFile doc du san pham", mFile.LoadFromFile(pathShoes) == m.GetCount());
+    Check("ShoesManager::LoadFromFile khong ton tai -> -1", mFile.LoadFromFile("khong_co_file.csv") == -1);
+    remove(pathShoes.c_str());
 }
 
 // ---------------------------------------------------------------- CUSTOMER
@@ -355,6 +363,14 @@ static void TestCustomer() {
     string afterDel = Capture([&]() { m.Show(); });
     Check("Show khong con C003", !Has(afterDel, "ID: C003"));
     Check("Insert lai C003 sau khi xoa", m.Insert(c3));
+
+    // Luu / doc file
+    const string pathCust = "test_tmp_customer.csv";
+    Check("CustomerManager::SaveToFile", m.SaveToFile(pathCust));
+    CustomerManager mCust;
+    Check("CustomerManager::LoadFromFile doc du khach hang", mCust.LoadFromFile(pathCust) == m.GetCount());
+    Check("CustomerManager::LoadFromFile khong ton tai -> -1", mCust.LoadFromFile("khong_co_file.csv") == -1);
+    remove(pathCust.c_str());
 }
 
 // ---------------------------------------------------------------- ORDER
@@ -434,6 +450,14 @@ static void TestOrder() {
     Check("ProcessNext khi queue rong -> false", !m.ProcessNext(out));
     Check("Delete don da xu ly (O1, khong nam trong queue)", m.Delete(m.Search("O1")));
     Check("Sau khi xoa, Insert lai O1 duoc", m.Insert(o1));
+
+    // Luu / doc file
+    const string pathOrder = "test_tmp_order.csv";
+    Check("OrderManager::SaveToFile", m.SaveToFile(pathOrder));
+    OrderManager mOrder;
+    Check("OrderManager::LoadFromFile doc du don hang", mOrder.LoadFromFile(pathOrder) == m.GetTotalCount());
+    Check("OrderManager::LoadFromFile khong ton tai -> -1", mOrder.LoadFromFile("khong_co_file.csv") == -1);
+    remove(pathOrder.c_str());
 }
 
 // ---------------------------------------------------------------- ORDER DETAIL

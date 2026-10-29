@@ -1,4 +1,5 @@
 #include "ShoesManager.h"
+#include <fstream>
 
 ShoesManager::ShoesManager() : Hash(101), Heap(1000){
     this->pL=new Node;
@@ -105,4 +106,38 @@ bool ShoesManager::IncreaseSold(const string& ID,const int& amount){
     if(p==NULL)
         return false;
     return this->Heap.IncreaseSold(p,amount);
+}
+
+// Lay tong so luong san pham giay trong danh sach
+int ShoesManager::GetCount() const{
+    return this->Nos;
+}
+
+// Luu toan bo danh sach giay ra file .txt/.csv theo dinh dang ToLine()
+bool ShoesManager::SaveToFile(const string& path) const{
+    ofstream f(path.c_str());
+    if(!f.is_open())
+        return false;
+    Node* tmp = this->pL->Next;
+    while(tmp != NULL){
+        f << tmp->data.ToLine() << '\n';
+        tmp = tmp->Next;
+    }
+    return true;
+}
+
+// Doc du lieu giay tu file .txt/.csv va tu dong chen vao ca 4 CTDL (List, HashTable, BST, MaxHeap)
+// Tra ve -1 neu mo file that bai, nguoc lai tra ve so san pham hop le da doc duoc
+int ShoesManager::LoadFromFile(const string& path){
+    ifstream f(path.c_str());
+    if(!f.is_open())
+        return -1;
+    int count = 0;
+    string line;
+    while(getline(f, line)){
+        Shoes s;
+        if(Shoes::FromLine(line, s) && this->Insert(s))
+            count++;
+    }
+    return count;
 }

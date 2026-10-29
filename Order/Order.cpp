@@ -96,7 +96,12 @@ string Order::ToLine() const{
 }
 
 bool Order::FromLine(const string& line, Order& o){
-    stringstream ss(line);
+    // Loai bo ky tu xuong dong Windows (\r) va khoang trang o cuoi dong de tranh loi doc file
+    string cleanLine = line;
+    while (!cleanLine.empty() && (cleanLine.back() == '\r' || cleanLine.back() == ' ' || cleanLine.back() == '\t'))
+        cleanLine.pop_back();
+
+    stringstream ss(cleanLine);
     string id, customer, date, status, rest;
     long long total;
 

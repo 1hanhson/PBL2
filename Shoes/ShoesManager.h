@@ -24,6 +24,9 @@ class ShoesManager{
         bool IncreaseSold(const string&,const int&);
         bool Delete(Node*);
         Node* Search(const string&);
+        int GetCount() const;
+        bool SaveToFile(const string&) const;
+        int LoadFromFile(const string&);
         friend class HashTable;
         friend class BST;
 };

@@ -18,7 +18,8 @@ Payment::Payment(const string& paymentId, const string& orderId, long long amoun
     this->amount = amount;
     this->paymentDate = paymentDate;
     this->paymentMethod = paymentMethod;
-    this->status = PaymentStatus::Wait;
+    // Giu dung trang thai duoc truyen vao (neu rong moi mac dinh la Wait)
+    this->status = status.empty() ? PaymentStatus::Wait : status;
 }
 
 void Payment::Output() const {

@@ -54,7 +54,12 @@ string OrderDetail::ToLine() const{
 }
 
 bool OrderDetail::FromLine(const string& line, OrderDetail& d){
-    stringstream ss(line);
+    // Loai bo ky tu xuong dong Windows (\r) va khoang trang o cuoi dong de tranh loi doc file
+    string cleanLine = line;
+    while (!cleanLine.empty() && (cleanLine.back() == '\r' || cleanLine.back() == ' ' || cleanLine.back() == '\t'))
+        cleanLine.pop_back();
+
+    stringstream ss(cleanLine);
     string order, shoes, rest;
     int quantity;
     long long price;

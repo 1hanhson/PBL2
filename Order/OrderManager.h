@@ -18,6 +18,11 @@ class OrderManager{
         NodeO* Search(const string&);
         bool Delete(NodeO*);
         bool ProcessNext(Order&);
+
+        int GetPendingCount() const;
+        int GetTotalCount() const;
+        bool SaveToFile(const string&) const;
+        int LoadFromFile(const string&);
 };
 
 #endif

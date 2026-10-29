@@ -121,7 +121,12 @@ string Shoes::ToLine() const{
 
 // Thieu truong, so khong hop le, so am hoac thua du lieu thi tra ve false
 bool Shoes::FromLine(const string& line, Shoes& s){
-    stringstream ss(line);
+    // Loai bo ky tu xuong dong Windows (\r) va khoang trang o cuoi dong de tranh loi doc file
+    string cleanLine = line;
+    while (!cleanLine.empty() && (cleanLine.back() == '\r' || cleanLine.back() == ' ' || cleanLine.back() == '\t'))
+        cleanLine.pop_back();
+
+    stringstream ss(cleanLine);
     string id, name, brand, rest;
     int size, quantity, sold;
     long long price;

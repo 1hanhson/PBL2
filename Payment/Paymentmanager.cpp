@@ -151,7 +151,7 @@ long long PaymentManager::RevenueByDate(const string& date) const{
 //luu moi giao dich thanh 1 dong, tra ve FALSE neu khong ghi duoc file
 bool PaymentManager::SaveToFile(const string& path) const{
     ofstream f(path.c_str());
-    if(!f)
+    if(!f.is_open())
         return false;
     for(int i=0;i<this->Size;i++)
         f<<this->List[i].ToLine()<<'\n';
@@ -162,7 +162,7 @@ bool PaymentManager::SaveToFile(const string& path) const{
 //tra ve -1 neu khong mo duoc file, nguoc lai tra ve so giao dich doc duoc
 int PaymentManager::LoadFromFile(const string& path){
     ifstream f(path.c_str());
-    if(!f)
+    if(!f.is_open())
         return -1;
     int count=0;
     string line;

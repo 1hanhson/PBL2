@@ -129,7 +129,7 @@ long long OrderDetailManager::TotalByOrder(const string& OrderID){
 // Luu moi chi tiet thanh 1 dong, tra ve false neu khong ghi duoc file
 bool OrderDetailManager::SaveToFile(const string& path){
     ofstream f(path.c_str());
-    if(!f)
+    if(!f.is_open())
         return false;
     NodeOD* tmp = this->pL->Next;
     while(tmp != NULL){
@@ -143,7 +143,7 @@ bool OrderDetailManager::SaveToFile(const string& path){
 // Tra ve -1 neu khong mo duoc file, nguoc lai tra ve so dong doc duoc
 int OrderDetailManager::LoadFromFile(const string& path){
     ifstream f(path.c_str());
-    if(!f)
+    if(!f.is_open())
         return -1;
     int count = 0;
     string line;

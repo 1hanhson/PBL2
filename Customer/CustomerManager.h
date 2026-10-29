@@ -21,6 +21,10 @@ class CustomerManager{
         bool Delete(NodeC*);
         bool Update(const string&, const Customer&);
 
+        int GetCount() const;
+        bool SaveToFile(const string&) const;
+        int LoadFromFile(const string&);
+
         friend class HashTableC;
 };
 
